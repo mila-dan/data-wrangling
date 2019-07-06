@@ -1,0 +1,137 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The WeRateDogs Twitter data project consists of the following parts:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Data gathering"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The following data have been gathered:\n",
+    "\n",
+    "* The WeRateDogs Twitter archive was read from *twitter_archive_enhanced.csv* file and stored in **tweet_data**\n",
+    "* The tweet image predictions were downloaded programmatically from the Internet using Requests library and URL and stored in **predictions**.\n",
+    "* Twitter API data were gathered using Python’s tweepy library and stored in **tweets_api**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Data assessment"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "During data assessment the following quality and tidiness issues have been found:\n",
+    "\n",
+    "**Data quality issues**:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "***For tweet_data***:\n",
+    "\n",
+    "* Remove retweets\n",
+    "* Data completeness: columns 'in_reply_to_status_id', 'in_reply_to_user_id', 'retweeted_status_id', 'retweeted_status_user_id', 'retweeted_status_timestamp' should be dropped because they have a lot of missing data and we need only original data for this project.\n",
+    "* Data correctness: 23 tweets have rating denominator not equal to 10. These tweets will be removed.\n",
+    "* Data correctness: 24 tweets have rating numerator more than 20. These tweets will be removed\n",
+    "* Keep only columns where first prediction p1_dog is True\n",
+    "* Columns shoud be renamed: 'timestamp': 'tweet_timestamp', 'text': 'tweet_text','name': 'dog_name', 'source': 'tweet_source'\n",
+    "* Timestamp should be datetime format\n",
+    "* For source column url should be extracted from html tags."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "\n",
+    "***For predictions***:\n",
+    "\n",
+    "* columns should be renamed: p1 - prediction1, p1_conf- prediction1_CI, p1_dog - prediction1_dog, p2 - prediction2, p2_conf- prediction2_CI, p2_dog - prediction2_dog, p3 - prediction3, p3_conf- prediction3_CI, p3_dog - prediction3_dog. \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Tidiness issues**\n",
+    "\n",
+    "* For dog stage we have 4 columns: Doggo, floofer, puppo, pupper. We can create only one column 'dog_stage', where doggo, puppo, pupper are the values.\n",
+    "* Column 'rating numerator' and 'rating denominator' can be merge in one column called 'rating'. Column 'rating_denominator' will be removed because all values are 10."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Data cleaning"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*tweet_data*, *predictions* and *tweets_api* table were copied to *tweet_data_clean*, *predictions_clean* and *tweets_api_clean* tables. After all quality and tideness issues were solved , all three tables were merged on tweet_id in a single dataframe **twitter_archive_master**."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Data storing"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The merged dataframe was stored in ***twitter_archive_master.csv*** file"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
